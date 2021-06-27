@@ -1,6 +1,9 @@
-import { AsyncStorage } from "react-native";
-import { Notifications } from "expo";
-import * as Permissions from "expo-permissions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from "expo-notifications";
+import {
+  DailyTriggerInput,
+  NotificationContentInput,
+} from "expo-notifications";
 
 const NOTIFICATION_KEY = "flashcard:notification";
 
@@ -9,37 +12,32 @@ export const clearLocalNotification = () =>
     Notifications.cancelAllScheduledNotificationsAsync
   );
 
-export const createNotification = () => ({
+const createNotification = (): NotificationContentInput => ({
   title: "Check cards",
   body: `Don't forget to check your cards today.`,
-  ios: {
-    sound: true
-  },
-  android: {
-    sound: true,
-    priority: "high",
-    sticky: false,
-    vibrate: true
-  }
+  sound: true,
+  sticky: false,
+  vibrate: [0, 250, 250, 250],
+  priority: "high",
 });
 
 export const setLocalNotification = () => {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
-    .then(data => {
+    .then((data) => {
       if (data === null) {
-        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+        Notifications.getPermissionsAsync().then(({ status }) => {
           if (status === "granted") {
             Notifications.cancelAllScheduledNotificationsAsync();
 
-            let tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(20);
-            tomorrow.setMinutes(0);
-
-            Notifications.scheduleLocalNotificationAsync(createNotification(), {
-              time: tomorrow,
-              repeat: "day"
+            const trigger: DailyTriggerInput = {
+              minute: 0,
+              hour: 12,
+              repeats: true,
+            };
+            Notifications.scheduleNotificationAsync({
+              content: createNotification(),
+              trigger,
             });
             AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
           }

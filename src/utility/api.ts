@@ -1,29 +1,29 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UDACITY_FLASHCARDS_KEY = "udacity:flashcards";
 
-export type Deck = {
-  deck_id: string;
-  title: string;
-  questions: Array<Question>;
-};
+export interface Deck {
+  readonly deck_id: string;
+  readonly title: string;
+  readonly questions: Array<Question>;
+}
 
 export type Answer = "correct" | "incorrect";
 
-export type Question = {
-  question: string;
-  answer: Answer;
-};
+export interface Question {
+  readonly question: string;
+  readonly answer: Answer;
+}
 
-export type HasDecks = {
-  decks: Record<string, Deck>;
-};
+export interface HasDecks {
+  readonly decks: Record<string, Deck>;
+}
 
-export type Card = {
-  deck_id: Deck["deck_id"];
-  question: Question["question"];
-  answer: Answer;
-};
+export interface Card {
+  readonly deck_id: Deck["deck_id"];
+  readonly question: Question["question"];
+  readonly answer: Answer;
+}
 
 const dummyData = (): HasDecks["decks"] => ({
   wdkp9xk3edalu40frxoigl: {
@@ -33,22 +33,22 @@ const dummyData = (): HasDecks["decks"] => ({
       {
         question:
           "React Props are like function arguments in JavaScript and attributes in HTML.",
-        answer: "correct"
+        answer: "correct",
       },
       {
         question: "When the state object changes, the component re-renders.",
-        answer: "correct"
+        answer: "correct",
       },
       {
         question:
           "The only way to initialize the state object is in the constructor.",
-        answer: "incorrect"
+        answer: "incorrect",
       },
       {
         question: "JSX is typesafe.",
-        answer: "correct"
-      }
-    ]
+        answer: "correct",
+      },
+    ],
   },
   e1bz7itvzi8351djcnes7j: {
     deck_id: "e1bz7itvzi8351djcnes7j",
@@ -56,14 +56,14 @@ const dummyData = (): HasDecks["decks"] => ({
     questions: [
       {
         question: "JavaScript can change HTML attribute values.",
-        answer: "correct"
+        answer: "correct",
       },
       {
         question: "Multi-line comments in JavaScript start with //.",
-        answer: "incorrect"
-      }
-    ]
-  }
+        answer: "incorrect",
+      },
+    ],
+  },
 });
 
 export async function getDecks(): Promise<HasDecks["decks"]> {
@@ -105,7 +105,7 @@ export async function addCardToDeck(card) {
     const deck = data[card.deck_id];
     deck.questions = deck.questions.concat({
       question: card.question,
-      answer: card.answer
+      answer: card.answer,
     });
     await AsyncStorage.mergeItem(
       UDACITY_FLASHCARDS_KEY,

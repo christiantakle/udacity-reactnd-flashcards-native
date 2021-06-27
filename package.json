@@ -2,34 +2,37 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "android": "expo start --android",
-    "eject": "expo eject",
-    "ios": "expo start --ios",
-    "start": "expo start",
-    "web": "expo start --web"
+    "android": "pnpx expo start --android",
+    "eject": "pnpx expo eject",
+    "ios": "pnpx expo start --ios",
+    "start": "pnpx expo start",
+    "web": "pnpx expo start --web"
   },
   "dependencies": {
-    "@react-native-community/masked-view": "0.1.5",
-    "@react-navigation/native": "5.0.7",
-    "@react-navigation/stack": "5.0.8",
-    "expo": "36.0.2",
-    "react": "16.12.0",
-    "react-dom": "16.12.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-    "react-native-gesture-handler": "~1.5.0",
-    "react-native-reanimated": "~1.4.0",
-    "react-native-safe-area-context": "0.6.0",
-    "react-native-screens": "2.0.0-alpha.12",
-    "react-native-web": "0.12.1",
-    "react-redux": "7.2.0",
-    "redux": "4.0.5"
+    "@react-native-community/masked-view": "0.1.11",
+    "@react-navigation/native": "5.9.4",
+    "@react-navigation/stack": "5.14.5",
+    "@react-native-async-storage/async-storage": "1.15.5",
+    "expo": "41.0.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+    "react-native-gesture-handler": "1.10.3",
+    "react-native-reanimated": "~2.1.0",
+    "react-native-safe-area-context": "3.2.0",
+    "react-native-screens": "~3.0.0",
+    "expo-notifications": "0.11.6",
+    "react-native-web": "~0.13.12",
+    "react-redux": "7.2.4",
+    "redux": "4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.8.4",
-    "@types/react": "16.9.22",
-    "@types/react-native": "0.61.16",
+    "@babel/core": "~7.9.0",
+    "@types/react": "~16.9.35",
+    "@types/react-native": "~0.63.2",
     "@types/react-redux": "7.1.7",
-    "babel-preset-expo": "8.0.0",
-    "typescript": "3.8.2"
+    "babel-preset-expo": "8.3.0",
+    "typescript": "4.3.4",
+    "expo-cli": "4.7.2"
   }
 }

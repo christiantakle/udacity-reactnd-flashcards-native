@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { receiveDecks } from "../actions/actions";
@@ -18,9 +18,9 @@ import { setLocalNotification } from "../utility/Notification";
 import { DeckPreview } from "./DeckPreview";
 import { Loading } from "./Loading";
 
-type Props = {
-  navigation: StackNavigationProp<RootStackParamList, "Decks">;
-};
+interface Props {
+  readonly navigation: StackNavigationProp<RootStackParamList, "Decks">;
+}
 
 export const DeckList: FC<Props> = ({ navigation }) => {
   const { loading, decks, decksIds } = useTypedSelector(({ decks }) => {
@@ -29,7 +29,7 @@ export const DeckList: FC<Props> = ({ navigation }) => {
     return {
       loading: decks === null ? true : false,
       decks,
-      decksIds
+      decksIds,
     };
   });
 
@@ -37,7 +37,7 @@ export const DeckList: FC<Props> = ({ navigation }) => {
 
   useEffect(() => {
     setLocalNotification();
-    getDecks().then(decks => dispatch(receiveDecks(decks)));
+    getDecks().then((decks) => dispatch(receiveDecks(decks)));
   }, []);
 
   if (loading === true) {
@@ -56,7 +56,7 @@ export const DeckList: FC<Props> = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       {decksIds ? (
-        decksIds.map(deck_id => (
+        decksIds.map((deck_id) => (
           <DeckPreview
             key={deck_id}
             deck_id={deck_id}
@@ -75,33 +75,33 @@ export const DeckList: FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   headerText: {
     textAlign: "center",
     fontSize: 24,
     fontWeight: "bold",
-    padding: 20
+    padding: 20,
   },
   noDeckMessage: {
     textAlign: "center",
     fontSize: 22,
-    color: colors.gray
+    color: colors.gray,
   },
   noDeckContainer: {
     flex: 1,
     justifyContent: "center",
-    height: 200
+    height: 200,
   },
   headerContainer: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 20
+    padding: 20,
   },
   addButton: {
     width: 40,
-    height: 40
-  }
+    height: 40,
+  },
 });
